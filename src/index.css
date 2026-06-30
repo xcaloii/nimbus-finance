@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Nimbus — dark fintech design tokens (Tailwind v4 @theme)
+   ============================================================ */
+@theme {
+  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-bg: #0a0c10;
+  --color-surface: #12161e;
+  --color-surface-2: #171c26;
+  --color-text: #eceff4;
+  --color-muted: #9aa3b2;
+  --color-faint: #5f6776;
+  --color-line: #232a35;
+  --color-line-soft: #1b212b;
+
+  --color-mint: #4fe0b0;
+  --color-mint-bright: #6cf3c5;
+  --color-mint-ink: #04150f;
+  --color-sky: #5b9dff;
+
+  --radius-card: 18px;
+  --radius-xl2: 28px;
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -18px rgba(0,0,0,.8);
+  --shadow-lift: 0 30px 70px -24px rgba(0,0,0,.9), 0 1px 0 rgba(255,255,255,.06) inset;
+
+  --animate-marquee: marquee 34s linear infinite;
+}
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes nimbus-pulse { 0%,100% { opacity:.9; } 50% { opacity:.4; } }
+
+/* ---------- Base ---------- */
+* { margin: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+::selection { background: var(--color-mint); color: var(--color-mint-ink); }
+:focus-visible { outline: 2px solid var(--color-mint); outline-offset: 3px; border-radius: 4px; }
+
+/* ambient gradient backdrop */
+.nimbus-bg {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60% 38% at 50% -6%, rgba(79,224,176,.16), transparent 60%),
+    radial-gradient(40% 30% at 88% 6%, rgba(91,157,255,.10), transparent 60%);
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); will-change: opacity, transform; }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  [class*="animate-marquee"] { animation: none !important; }
+}
